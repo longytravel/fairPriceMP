@@ -1,0 +1,5 @@
+# Epic List
+- Epic 1: Multi-Pair Core Foundation - Stand up the modular scaffolding that lets a single EA instance manage up to 28 forex pairs, spinning up per-symbol engines that mirror today's fairPrice trading style while keeping risk, configuration, and lifecycle logic cleanly isolated for future expansion.
+- Epic 2: Correlation Guardrails & Dashboard - Introduce the correlation service, enforce the configurable concurrency cap across the full 28-pair universe, surface blocked-trade messaging, and deliver the per-symbol dashboard for live situational awareness.
+- Epic 3: Backtesting & Optimisation Enablement - Harden multi-currency strategy tester support for all 28 pairs, capture per-symbol metrics and logs, and ensure parameter input and export workflows make optimisation runs repeatable and deterministic.
+

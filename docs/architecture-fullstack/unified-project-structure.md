@@ -1,0 +1,36 @@
+# Unified Project Structure
+```
+fairPriceMP/
+  docs/
+    prd.md
+    front-end-spec.md
+    architecture-fullstack.md
+  scripts/
+    MT5_File_Sync.ps1
+    Start_MT5_Sync.bat
+  src/
+    MT5/
+      Experts/
+        fairPriceMP/
+          CoreOrchestrator.mq5
+          Modules/
+            Engines/
+            Services/
+            Persistence/
+            Export/
+          UI/
+            DashboardRenderer.mqh
+            DashboardTable.mqh
+      Include/
+        fairPriceMP/
+          DTO/
+          Logging/
+          Validation/
+          UI/
+      Files/
+        fairPriceMP/
+          snapshots/
+          logs/
+      Indicators/
+        fairPriceMP/
+```

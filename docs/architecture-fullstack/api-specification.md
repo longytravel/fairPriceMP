@@ -1,0 +1,2 @@
+# API Specification
+The EA runs entirely inside MT5 with no HTTP, GraphQL, or tRPC interface; all communication occurs through in-process module contracts defined in the components section. Therefore no external API specification is required beyond those interfaces.
