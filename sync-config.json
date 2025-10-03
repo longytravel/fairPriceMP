@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "description": "MT5 Enhanced Sync Configuration",
+  "settings": {
+    "sourceFolder": "C:\\Users\\User\\Desktop\\fairPriceMP",
+    "destinationFolder": "C:\\Users\\User\\AppData\\Roaming\\MetaQuotes\\Terminal\\010E047102812FC0C18890992854220E\\MQL5",
+    "backupFolder": "C:\\Users\\User\\Desktop\\fairPriceMP\\Backups",
+    "syncMode": "one-way",
+    "autoCompile": false,
+    "autoCommit": false,
+    "createBackups": true
+  },
+  "folders": [
+    "Experts",
+    "Include",
+    "Scripts",
+    "Files",
+    "Indicators",
+    "Libraries"
+  ],
+  "fileTypes": {
+    "source": [".mq5", ".mqh"],
+    "compiled": [".ex5"],
+    "data": [".csv", ".json", ".txt"],
+    "logs": [".log"],
+    "all": ["*"]
+  },
+  "notifications": {
+    "enabled": true,
+    "showFileType": true,
+    "compileReminder": true
+  },
+  "performance": {
+    "fileReadyWaitMs": 500,
+    "maxRetries": 5,
+    "retryDelayMs": 300,
+    "copyMaxRetries": 3
+  },
+  "notes": {
+    "syncMode": "one-way = Dev to MT5 only, bidirectional = both ways",
+    "autoCompile": "Set to true to auto-compile .mq5 files (requires MetaEditor CLI)",
+    "autoCommit": "Set to true to auto-commit synced files to git",
+    "fileTypes": "Use 'all' array with ['*'] to monitor everything"
+  }
+}
