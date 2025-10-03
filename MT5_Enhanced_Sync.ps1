@@ -105,7 +105,7 @@ $syncAction = {
     }
 
     if (-not $fileReady) {
-        Write-Host "[$timestamp] ⚠️  File locked, skipping: '$relativePath'" -ForegroundColor Yellow
+        Write-Host "[$timestamp] WARNING: File locked, skipping: '$relativePath'" -ForegroundColor Yellow
         return
     }
 
@@ -119,7 +119,7 @@ $syncAction = {
             $backupPath = Join-Path -Path $backupFolder -ChildPath $backupFileName
 
             Copy-Item -Path $destinationPath -Destination $backupPath -Force
-            Write-Host "[$timestamp] 💾 Backup: $backupFileName" -ForegroundColor Cyan
+            Write-Host "[$timestamp] BACKUP: $backupFileName" -ForegroundColor Cyan
         }
 
         # Copy with retry logic
@@ -135,7 +135,7 @@ $syncAction = {
             catch {
                 $copyRetries++
                 if ($copyRetries -lt $maxCopyRetries) {
-                    Write-Host "[$timestamp] 🔄 Retrying ($copyRetries/$maxCopyRetries)..." -ForegroundColor Yellow
+                    Write-Host "[$timestamp] RETRY: Attempt $copyRetries of $maxCopyRetries..." -ForegroundColor Yellow
                     Start-Sleep -Seconds 1
                 }
                 else {
@@ -145,11 +145,11 @@ $syncAction = {
         }
 
         # Success message with file type
-        Write-Host "[$timestamp] ✅ Synced [$fileType]: $relativePath" -ForegroundColor Green
+        Write-Host "[$timestamp] SYNCED [$fileType]: $relativePath" -ForegroundColor Green
 
         # Special reminder for source files
         if ($fileExt -eq ".mq5" -or $fileExt -eq ".mqh") {
-            Write-Host "                💡 Remember to RECOMPILE (F7) in MetaEditor" -ForegroundColor Yellow
+            Write-Host "                REMINDER: Press F7 in MetaEditor to compile" -ForegroundColor Yellow
         }
 
         # Desktop notification
@@ -170,7 +170,7 @@ $syncAction = {
         }
     }
     catch {
-        Write-Host "[$timestamp] ❌ ERROR: Failed to sync '$relativePath'" -ForegroundColor Red
+        Write-Host "[$timestamp] ERROR: Failed to sync '$relativePath'" -ForegroundColor Red
         Write-Host "                $($_.Exception.Message)" -ForegroundColor Red
     }
 }
@@ -195,32 +195,29 @@ $changed = Register-ObjectEvent -InputObject $watcher -EventName Changed -Action
 
 # Display startup banner
 Clear-Host
-Write-Host "╔════════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║     MT5 ENHANCED FILE AUTO-SYNC - FULL SYNC MODE          ║" -ForegroundColor Cyan
-Write-Host "╚════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host "================================================================" -ForegroundColor Cyan
+Write-Host "     MT5 ENHANCED FILE AUTO-SYNC - FULL SYNC MODE              " -ForegroundColor Cyan
+Write-Host "================================================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "📁 Source:      " -ForegroundColor Yellow -NoNewline
-Write-Host $sourceFolder -ForegroundColor White
-Write-Host "📁 Destination: " -ForegroundColor Yellow -NoNewline
-Write-Host $destinationFolder -ForegroundColor White
-Write-Host "💾 Backups:     " -ForegroundColor Yellow -NoNewline
-Write-Host $backupFolder -ForegroundColor White
+Write-Host "Source:      $sourceFolder" -ForegroundColor Yellow
+Write-Host "Destination: $destinationFolder" -ForegroundColor Yellow
+Write-Host "Backups:     $backupFolder" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "📂 Syncing Folders:" -ForegroundColor Green
+Write-Host "Syncing Folders:" -ForegroundColor Green
 foreach ($folder in $foldersToSync) {
-    Write-Host "   ✓ $folder" -ForegroundColor Gray
+    Write-Host "   * $folder" -ForegroundColor Gray
 }
 Write-Host ""
-Write-Host "🔍 Monitoring: ALL file types (*.*)" -ForegroundColor Green
-Write-Host "🔄 Mode: One-way sync (Dev → MT5)" -ForegroundColor Green
-Write-Host "💾 Auto-backup: Enabled" -ForegroundColor Green
-Write-Host "🔕 Manual compile: You control F7" -ForegroundColor Green
+Write-Host "Monitoring: ALL file types (*.*)" -ForegroundColor Green
+Write-Host "Mode: One-way sync (Dev -> MT5)" -ForegroundColor Green
+Write-Host "Auto-backup: Enabled" -ForegroundColor Green
+Write-Host "Manual compile: You control F7" -ForegroundColor Green
 Write-Host ""
-Write-Host "════════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host "================================================================" -ForegroundColor Cyan
 Write-Host ""
 
 # Perform initial sync
-Write-Host "🚀 Performing initial sync..." -ForegroundColor Cyan
+Write-Host "Performing initial sync..." -ForegroundColor Cyan
 Write-Host ""
 
 $syncCount = 0
@@ -240,17 +237,17 @@ foreach ($folder in $foldersToSync) {
             Copy-Item -Path $_.FullName -Destination $destinationPath -Force -ErrorAction SilentlyContinue
 
             $fileType = Get-FileTypeDescription -Extension $_.Extension
-            Write-Host "  ✅ [$fileType] $relativePath" -ForegroundColor Green
+            Write-Host "  SYNCED [$fileType] $relativePath" -ForegroundColor Green
             $syncCount++
         }
     }
 }
 
 Write-Host ""
-Write-Host "✨ Initial sync complete! Synced $syncCount files" -ForegroundColor Green
+Write-Host "Initial sync complete! Synced $syncCount files" -ForegroundColor Green
 Write-Host ""
-Write-Host "👀 Watching for changes... (Press Ctrl+C to stop)" -ForegroundColor Yellow
-Write-Host "════════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host "Watching for changes... (Press Ctrl+C to stop)" -ForegroundColor Yellow
+Write-Host "================================================================" -ForegroundColor Cyan
 Write-Host ""
 
 # Keep script running
@@ -262,10 +259,10 @@ try {
 finally {
     # Cleanup
     Write-Host ""
-    Write-Host "🛑 Stopping file sync..." -ForegroundColor Yellow
+    Write-Host "Stopping file sync..." -ForegroundColor Yellow
     $watcher.EnableRaisingEvents = $false
     $watcher.Dispose()
     Unregister-Event -SourceIdentifier $created.Name -ErrorAction SilentlyContinue
     Unregister-Event -SourceIdentifier $changed.Name -ErrorAction SilentlyContinue
-    Write-Host "✅ File sync stopped successfully" -ForegroundColor Green
+    Write-Host "File sync stopped successfully" -ForegroundColor Green
 }
