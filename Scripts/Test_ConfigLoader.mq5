@@ -59,7 +59,7 @@ void TestDuplicateDetection()
    bool enabled[] = {true, true, true};
    string errorMsg;
 
-   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, errorMsg);
+   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, 0.01, 3, 5.0, 20, errorMsg);
 
    Assert(!result, "Should reject duplicate symbols", errorMsg);
    AssertContains(errorMsg, "Duplicate", "Error message should mention duplicate");
@@ -78,7 +78,7 @@ void TestUnsupportedSymbol()
    bool enabled[] = {true, true, true};
    string errorMsg;
 
-   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, errorMsg);
+   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, 0.01, 3, 5.0, 20, errorMsg);
 
    Assert(!result, "Should reject unsupported symbols", errorMsg);
    AssertContains(errorMsg, "Unsupported", "Error message should mention unsupported symbol");
@@ -97,7 +97,7 @@ void TestNonASCIISymbol()
    bool enabled[] = {true, true};
    string errorMsg;
 
-   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, errorMsg);
+   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, 0.01, 3, 5.0, 20, errorMsg);
 
    Assert(!result, "Should reject non-ASCII symbols", errorMsg);
    AssertContains(errorMsg, "ASCII", "Error message should mention ASCII");
@@ -116,7 +116,7 @@ void TestValidConfiguration()
    bool enabled[] = {true, true, true};
    string errorMsg;
 
-   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, errorMsg);
+   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, 0.01, 3, 5.0, 20, errorMsg);
 
    Assert(result, "Should load valid configuration", errorMsg);
    Assert(loader.GetConfigCount() == 3, "Should have 3 configs", IntegerToString(loader.GetConfigCount()));
@@ -145,7 +145,7 @@ void TestEmptySymbolHandling()
    bool enabled[] = {true, true, true};
    string errorMsg;
 
-   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, errorMsg);
+   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, 0.01, 3, 5.0, 20, errorMsg);
 
    Assert(result, "Should handle empty symbols gracefully", errorMsg);
    Assert(loader.GetConfigCount() == 2, "Should skip empty symbols", IntegerToString(loader.GetConfigCount()));
@@ -165,7 +165,7 @@ void TestDTOPropagation()
    bool enabled[] = {true, true};
    string errorMsg;
 
-   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, errorMsg);
+   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, 0.01, 3, 5.0, 20, errorMsg);
    Assert(result, "Config should load", errorMsg);
 
    SymbolConfigEntry configs[];
@@ -190,7 +190,7 @@ void TestStateRegistryInit()
    bool enabled[] = {true, false};  // GBPUSD disabled
    string errorMsg;
 
-   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, errorMsg);
+   bool result = loader.LoadConfig(symbols, enabled, 100.0, 5, 1.0, 10.0, 0.01, 3, 5.0, 20, errorMsg);
    Assert(result, "Config should load", errorMsg);
 
    SymbolConfigEntry configs[];
